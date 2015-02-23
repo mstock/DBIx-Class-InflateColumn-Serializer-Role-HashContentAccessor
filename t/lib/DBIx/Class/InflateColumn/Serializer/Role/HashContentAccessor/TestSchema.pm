@@ -1,4 +1,4 @@
-package DBIx::Class::InflateColumn::Serializer::Hstore::Accessor::TestSchema;
+package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema;
 
 use Moose;
 use MooseX::MarkAsMethods autoclean => 1;

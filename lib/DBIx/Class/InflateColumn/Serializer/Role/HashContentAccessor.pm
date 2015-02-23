@@ -1,6 +1,6 @@
-package DBIx::Class::InflateColumn::Serializer::Hstore::Accessor;
+package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor;
 
-# ABSTRACT: Parameterized Moose role which provides accessor methods for values stored in a HStore
+# ABSTRACT: Parameterized Moose role which provides accessor methods for values stored in a hash like structure
 
 use MooseX::Role::Parameterized;
 
@@ -20,7 +20,7 @@ In your result (table) classes:
 		...,
 	);
 
-	with 'DBIx::Class::InflateColumn::Serializer::Hstore::Accessor' => {
+	with 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor' => {
 		column => 'properties',
 		name   => 'property',
 	};
@@ -39,10 +39,12 @@ Then in your application code:
 
 =head1 DESCRIPTION
 
-This parameterized role provides methods to access values of a HStore column in a
-L<DBIx::Class|DBIx::Class> based database schema that uses L<Moose|Moose>. It
-assumes that the (de)serializing of the column in done using
-L<DBIx::Class::InflateColumn::Serializer::Hstore|DBIx::Class::InflateColumn::Serializer::Hstore>.
+This parameterized role provides methods to access values of a column that stores
+'hash-like' data in a L<DBIx::Class|DBIx::Class> based database schema that uses
+L<Moose|Moose>. It assumes that the (de)serializing of the column in done using
+something like L<DBIx::Class::InflateColumn::Serializer|DBIx::Class::InflateColumn::Serializer>,
+i.e. that the inflated values are hash references that get serialized to something
+the database can store on C<INSERT>/C<UPDATE>.
 
 This module provides the following advantages over using the inflated hashref
 directly:
@@ -57,13 +59,13 @@ yourself - the methods provided by this role do that already.
 =item *
 
 It's easy to provide a default when getting a value which is not necessarily
-already stored in the HStore column.
+already stored in the column data.
 
 =item *
 
-If you remove the HStore column and replace it with dedicated columns in the
-future, you can simply remove the role and provide compatible accessors yourself
-which allows you to keep the interface of the result class.
+If you remove the key-value-based column and replace it with dedicated columns
+in the future, you can simply remove the role and provide compatible accessors
+yourself which allows you to keep the interface of the result class.
 
 =back
 
@@ -169,9 +171,18 @@ role {
 
 =item *
 
-L<https://metacpan.org/pod/DBIx::Class::InflateColumn::Serializer::Hstore|https://metacpan.org/pod/DBIx::Class::InflateColumn::Serializer::Hstore>
-- L<DBIx::Class|DBIx::Class> serializer which should be used when using this role
-to access the HStore.
+L<DBIx::Class::InflateColumn|DBIx::Class::InflateColumn> - Underlying mechanism
+for deflating/inflating complex data.
+
+=item *
+
+L<DBIx::Class::InflateColumn::Serializer|DBIx::Class::InflateColumn::Serializer>
+- Inflators for data structures, uses eg. JSON to store the data in the database.
+
+=item *
+
+L<DBIx::Class::InflateColumn::Serializer::Hstore|DBIx::Class::InflateColumn::Serializer::Hstore>
+- Serializer which uses the HStore type for storage in the database.
 
 =item *
 

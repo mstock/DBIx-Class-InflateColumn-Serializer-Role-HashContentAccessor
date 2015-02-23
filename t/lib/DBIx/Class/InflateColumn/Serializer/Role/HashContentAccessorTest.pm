@@ -1,4 +1,4 @@
-package DBIx::Class::InflateColumn::Serializer::Hstore::AccessorTest;
+package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessorTest;
 use parent qw(Test::Class);
 
 use strict;
@@ -9,12 +9,12 @@ use Test::More;
 use Test::Exception;
 
 use DBICx::TestDatabase;
-use DBIx::Class::InflateColumn::Serializer::Hstore::Accessor;
+use DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor;
 
 sub setup : Test(setup) {
 	my ($self) = @_;
 
-	$self->{schema} = DBICx::TestDatabase->new('DBIx::Class::InflateColumn::Serializer::Hstore::Accessor::TestSchema');
+	$self->{schema} = DBICx::TestDatabase->new('DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema');
 }
 
 sub get_set_delete_test : Test(9) {

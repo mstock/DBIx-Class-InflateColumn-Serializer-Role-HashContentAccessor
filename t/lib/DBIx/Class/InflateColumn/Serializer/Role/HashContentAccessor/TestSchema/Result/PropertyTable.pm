@@ -1,4 +1,4 @@
-package DBIx::Class::InflateColumn::Serializer::Hstore::Accessor::TestSchema::Result::PropertyTable;
+package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema::Result::PropertyTable;
 
 use strict;
 use warnings;
@@ -28,12 +28,12 @@ __PACKAGE__->add_columns(
 
 __PACKAGE__->set_primary_key("id");
 
-with 'DBIx::Class::InflateColumn::Serializer::Hstore::Accessor' => {
+with 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor' => {
 	column => 'properties1',
 	name   => 'property1',
 };
 
-with 'DBIx::Class::InflateColumn::Serializer::Hstore::Accessor' => {
+with 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor' => {
 	column => 'properties2',
 	name   => 'property2',
 };
