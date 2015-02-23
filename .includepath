@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <includepath>
-	<includepathentry path="${resource_loc:/DBIx-Class-InflateColumn-Serializer-Hstore-Accessor/lib}" />
-	<includepathentry path="${resource_loc:/DBIx-Class-InflateColumn-Serializer-Hstore-Accessor/t/lib}" />
+	<includepathentry path="${resource_loc:/DBIx-Class-InflateColumn-Serializer-Role-HashContentAccessor/lib}" />
+	<includepathentry path="${resource_loc:/DBIx-Class-InflateColumn-Serializer-Role-HashContentAccessor/t/lib}" />
 </includepath>
