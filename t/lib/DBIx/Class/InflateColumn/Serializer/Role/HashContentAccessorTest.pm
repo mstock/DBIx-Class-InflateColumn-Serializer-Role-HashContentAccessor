@@ -17,51 +17,53 @@ sub setup : Test(setup) {
 	$self->{schema} = DBICx::TestDatabase->new('DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema');
 }
 
-sub get_set_delete_test : Test(9) {
+sub get_set_delete_test : Test(18) {
 	my ($self) = @_;
 
-	my $entry = $self->{schema}->resultset('PropertyTable')->create({});
+	for my $table (qw(HStoreTable JSONTable)) {
+		my $entry = $self->{schema}->resultset($table)->create({});
 
-	my %property = (
-		foo  => 'bar',
-		test => 123
-	);
+		my %property = (
+			foo  => 'bar',
+			test => 123
+		);
 
-	# Set properties
-	$entry->set_property1(%property);
-	$entry->update();
-	$entry->discard_changes();
-	is_deeply($entry->properties1(), \%property, 'properties set');
+		# Set properties
+		$entry->set_property1(%property);
+		$entry->update();
+		$entry->discard_changes();
+		is_deeply($entry->properties1(), \%property, 'properties set');
 
-	# Get property
-	is($entry->get_property1('foo'), 'bar', 'property retrieved');
-	is($entry->get_property1('foobar', 'default'), 'default', 'property retrieved');
+		# Get property
+		is($entry->get_property1('foo'), 'bar', 'property retrieved');
+		is($entry->get_property1('foobar', 'default'), 'default', 'property retrieved');
 
-	# Add property
-	$entry->set_property1(a => 'b');
-	$entry->update();
-	$entry->discard_changes();
-	is_deeply($entry->properties1(), { %property, a => 'b' }, 'property added');
+		# Add property
+		$entry->set_property1(a => 'b');
+		$entry->update();
+		$entry->discard_changes();
+		is_deeply($entry->properties1(), { %property, a => 'b' }, 'property added');
 
-	# Delete property
-	$entry->delete_property1('foo');
-	$entry->update();
-	$entry->discard_changes();
-	is_deeply($entry->properties1(), { test => 123, a => 'b' }, 'property added');
+		# Delete property
+		$entry->delete_property1('foo');
+		$entry->update();
+		$entry->discard_changes();
+		is_deeply($entry->properties1(), { test => 123, a => 'b' }, 'property added');
 
-	# Use second accessor
-	is($entry->get_property2('foo'), undef, 'no value set');
-	$entry->set_property2(foo => 'my value');
-	$entry->update();
-	$entry->discard_changes();
-	is($entry->get_property2('foo'), 'my value', 'value set');
-	is_deeply($entry->properties2(), {foo => 'my value'}, 'hash content ok');
-	$entry->update();
-	$entry->discard_changes();
-	$entry->delete_property2('foo');
-	$entry->update();
-	$entry->discard_changes();
-	is_deeply($entry->properties2(), {}, 'hash content ok');
+		# Use second accessor
+		is($entry->get_property2('foo'), undef, 'no value set');
+		$entry->set_property2(foo => 'my value');
+		$entry->update();
+		$entry->discard_changes();
+		is($entry->get_property2('foo'), 'my value', 'value set');
+		is_deeply($entry->properties2(), {foo => 'my value'}, 'hash content ok');
+		$entry->update();
+		$entry->discard_changes();
+		$entry->delete_property2('foo');
+		$entry->update();
+		$entry->discard_changes();
+		is_deeply($entry->properties2(), {}, 'hash content ok');
+	}
 }
 
 1;
