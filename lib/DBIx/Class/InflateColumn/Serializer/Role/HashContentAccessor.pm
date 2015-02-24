@@ -3,6 +3,7 @@ package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor;
 # ABSTRACT: Parameterized Moose role which provides accessor methods for values stored in a hash like structure
 
 use MooseX::Role::Parameterized;
+use Carp;
 
 =head1 SYNOPSIS
 
@@ -137,7 +138,7 @@ role {
 		my ($self, $key, $default) = @_;
 
 		unless (defined $key && $key ne '') {
-			croak("Required 'key' parameter not passed");
+			croak("Required 'key' parameter not passed or empty");
 		}
 
 		my $value = $self->$properties()->{$key};

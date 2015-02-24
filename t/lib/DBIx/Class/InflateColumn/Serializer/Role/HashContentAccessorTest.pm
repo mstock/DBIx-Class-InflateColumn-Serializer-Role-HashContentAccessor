@@ -17,7 +17,7 @@ sub setup : Test(setup) {
 	$self->{schema} = DBICx::TestDatabase->new('DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema');
 }
 
-sub get_set_delete_test : Test(20) {
+sub get_set_delete_test : Test(26) {
 	my ($self) = @_;
 
 	for my $table (qw(HStoreTable JSONTable)) {
@@ -38,6 +38,16 @@ sub get_set_delete_test : Test(20) {
 		is($entry->get_property1('foo'), 'bar', 'property retrieved');
 		is($entry->get_property1('foobar', 'default'), 'default', 'property retrieved');
 		is($entry->get_property1('foo', 'default'), 'bar', 'property retrieved');
+		throws_ok(
+			sub { $entry->get_property1(); },
+			qr{Required 'key' parameter not passed or empty},
+			'key required'
+		);
+		throws_ok(
+			sub { $entry->get_property1(''); },
+			qr{Required 'key' parameter not passed or empty},
+			'key required'
+		);
 
 		# Add property
 		$entry->set_property1(a => 'b');
@@ -50,6 +60,7 @@ sub get_set_delete_test : Test(20) {
 		$entry->update();
 		$entry->discard_changes();
 		is_deeply($entry->properties1(), { test => 123, a => 'b' }, 'property added');
+		is($entry->delete_property1(), undef, 'may call delete_* without key');
 
 		# Use second accessor
 		is($entry->get_property2('foo'), undef, 'no value set');
