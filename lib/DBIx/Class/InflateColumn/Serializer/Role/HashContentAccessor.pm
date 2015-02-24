@@ -1,6 +1,6 @@
 package DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor;
 
-# ABSTRACT: Parameterized Moose role which provides accessor methods for values stored in a hash like structure
+# ABSTRACT: Parameterized Moose role which provides accessor methods for values stored in a hash-like structure
 
 use MooseX::Role::Parameterized;
 use Carp;
@@ -42,7 +42,7 @@ Then in your application code:
 =head1 DESCRIPTION
 
 This parameterized role provides methods to access values of a column that stores
-'hash-like' data in a L<DBIx::Class|DBIx::Class> based database schema that uses
+'hash-like' data in a L<DBIx::Class|DBIx::Class>-based database schema that uses
 L<Moose|Moose>. It assumes that the (de)serializing of the column in done using
 something like L<DBIx::Class::InflateColumn::Serializer|DBIx::Class::InflateColumn::Serializer>,
 i.e. that the inflated values are hash references that get serialized to something
@@ -60,14 +60,14 @@ yourself - the methods provided by this role do that already.
 
 =item *
 
-It's easy to provide a default when getting a value which is not necessarily
-already stored in the column data.
+It's easy to provide a default when getting the value of a key which is not
+necessarily already stored in the column data.
 
 =item *
 
 If you remove the key-value-based column and replace it with dedicated columns
 in the future, you can simply remove the role and provide compatible accessors
-yourself which allows you to keep the interface of the result class.
+yourself. This allows you to keep the interface of the result class.
 
 =back
 
@@ -77,15 +77,15 @@ yourself which allows you to keep the interface of the result class.
 
 =item column
 
-Column which should be updated.
+Column where the data is stored.
 
 =item name
 
-Suffix of the accessors that should be generated.
+Suffix for the accessors that will be generated.
 
 =back
 
-=head1 METHODS
+=head1 GENERATED METHODS
 
 =cut
 
@@ -100,7 +100,7 @@ if the property is undefined.
 
 =head2 delete_$name
 
-Delete the properties of the given names.
+Delete the properties with the given names.
 
 =cut
 
