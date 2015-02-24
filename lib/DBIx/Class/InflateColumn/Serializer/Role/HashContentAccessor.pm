@@ -33,6 +33,7 @@ Then in your application code:
 
 	$object->get_property('foo');
 	$object->get_property('bar');
+	$object->get_property('baz', 'default');
 
 	$object->delete_property('foo');
 	$object->delete_property('bar');
