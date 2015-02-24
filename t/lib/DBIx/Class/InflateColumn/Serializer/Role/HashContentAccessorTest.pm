@@ -17,7 +17,7 @@ sub setup : Test(setup) {
 	$self->{schema} = DBICx::TestDatabase->new('DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema');
 }
 
-sub get_set_delete_test : Test(18) {
+sub get_set_delete_test : Test(20) {
 	my ($self) = @_;
 
 	for my $table (qw(HStoreTable JSONTable)) {
@@ -37,6 +37,7 @@ sub get_set_delete_test : Test(18) {
 		# Get property
 		is($entry->get_property1('foo'), 'bar', 'property retrieved');
 		is($entry->get_property1('foobar', 'default'), 'default', 'property retrieved');
+		is($entry->get_property1('foo', 'default'), 'bar', 'property retrieved');
 
 		# Add property
 		$entry->set_property1(a => 'b');
