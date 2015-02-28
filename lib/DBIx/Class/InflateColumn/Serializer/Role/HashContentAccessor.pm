@@ -138,7 +138,7 @@ role {
 	method 'get_'.$name => sub {
 		my ($self, $key, $default) = @_;
 
-		unless (defined $key && $key ne '') {
+		if (! defined $key || $key eq '') {
 			croak("Required 'key' parameter not passed or empty");
 		}
 
@@ -149,7 +149,7 @@ role {
 	method 'delete_'.$name => sub {
 		my ($self, @keys) = @_;
 
-		unless (scalar @keys > 0) {
+		if (scalar @keys == 0) {
 			return;
 		}
 
