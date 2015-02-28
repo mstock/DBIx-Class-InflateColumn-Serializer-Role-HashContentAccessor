@@ -1,0 +1,4 @@
+/.prove
+/.build
+.*.swp
+/DBIx-Class-InflateColumn-Serializer-Role-HashContentAccessor-*
