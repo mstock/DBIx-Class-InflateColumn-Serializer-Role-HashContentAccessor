@@ -125,10 +125,10 @@ parameter name => (
 );
 
 role {
-	my ($p, %arg) = @_;
+	my ($p, %role_arg) = @_;
 
 	my $column     = $p->column();
-	$arg{consumer}->find_method_by_name($column)
+	$role_arg{consumer}->find_method_by_name($column)
 		or croak('Consuming class must have "' . $column . '" method');
 	my $name       = $p->name();
 	my $properties = sub {
