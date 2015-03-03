@@ -21,9 +21,9 @@ __PACKAGE__->add_columns(
 		sequence          => "property_table_id_seq",
 	},
 	"properties1",
-	{ data_type => "hstore", is_nullable => 1, serializer_class => "JSON" },
+	{ data_type => "text", is_nullable => 1, serializer_class => "JSON" },
 	"properties2",
-	{ data_type => "hstore", is_nullable => 1, serializer_class => "JSON" },
+	{ data_type => "text", is_nullable => 1, serializer_class => "JSON" },
 );
 
 __PACKAGE__->set_primary_key("id");
