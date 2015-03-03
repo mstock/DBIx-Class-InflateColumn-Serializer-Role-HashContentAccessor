@@ -13,30 +13,40 @@ In your result (table) classes:
 
 	__PACKAGE__->add_columns(
 		...,
-		properties => {
+		hproperties => {
 			data_type        => "hstore",
 			is_nullable      => 1,
 			serializer_class => "Hstore"
+		},
+		jproperties => {
+			data_type        => "text",
+			is_nullable      => 1,
+			serializer_class => "JSON"
 		},
 		...,
 	);
 
 	with 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor' => {
-		column => 'properties',
-		name   => 'property',
+		column => 'jproperties',
+		name   => 'jproperty',
+	};
+	with 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor' => {
+		column => 'hproperties',
+		name   => 'hproperty',
 	};
 
 Then in your application code:
 
-	$object->set_property(foo => 10, bar => 20);
+	$object->set_hproperty(foo => 10, bar => 20);
+	$object->set_jproperty(key => "test");
 	$object->update();
 
-	$object->get_property('foo');
-	$object->get_property('bar');
-	$object->get_property('baz', 'default');
+	$object->get_hproperty('foo');
+	$object->get_hproperty('bar');
+	$object->get_hproperty('baz', 'default');
 
-	$object->delete_property('foo');
-	$object->delete_property('bar');
+	$object->delete_hproperty('foo');
+	$object->delete_hproperty('bar');
 	$object->update();
 
 =head1 DESCRIPTION
