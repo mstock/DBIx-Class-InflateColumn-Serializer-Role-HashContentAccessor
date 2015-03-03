@@ -125,9 +125,11 @@ parameter name => (
 );
 
 role {
-	my $p = shift;
+	my ($p, %arg) = @_;
 
 	my $column     = $p->column();
+	$arg{consumer}->find_method_by_name($column)
+		or croak('Consuming class must have "' . $column . '" method');
 	my $name       = $p->name();
 	my $properties = sub {
 		my ($self) = @_;

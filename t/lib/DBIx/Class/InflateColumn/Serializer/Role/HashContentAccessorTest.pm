@@ -78,4 +78,22 @@ sub get_set_delete_test : Test(26) {
 	}
 }
 
+
+sub missing_column_test : Test(2) {
+	my ($self) = @_;
+
+	for my $table (qw(HStoreTable JSONTable)) {
+		my $class = 'DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor::TestSchema::Result::'.$table;
+		throws_ok(sub {
+			DBIx::Class::InflateColumn::Serializer::Role::HashContentAccessor->meta->apply(
+				$class->meta(), (
+					column => 'properties3',
+					name   => 'property3',
+				)
+			);
+		}, qr{Consuming class must have "properties3" method}, 'class must have method that matches column name');
+	}
+}
+
+
 1;
